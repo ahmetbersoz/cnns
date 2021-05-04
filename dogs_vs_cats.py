@@ -84,7 +84,15 @@ model = tf.keras.models.Sequential([
 model.compile(optimizer=RMSprop(lr=0.001), loss='binary_crossentropy', metrics=['acc'])
 
 TRAINING_DIR = "tmp/cats-v-dogs/training"
-train_datagen = ImageDataGenerator( rescale = 1.0/255. )
+train_datagen = ImageDataGenerator( rescale = 1/255,
+                                    rotation_range = 40,
+                                    width_shift_range = 0.2,
+                                    height_shift_range = 0.2,
+                                    shear_range = 0.2,
+                                    zoom_range = 0.2,
+                                    horizontal_flip = True,
+                                    fill_mode = 'nearest')
+
 train_generator = train_datagen.flow_from_directory(TRAINING_DIR,
                                                     batch_size=10,
                                                     class_mode='binary',
